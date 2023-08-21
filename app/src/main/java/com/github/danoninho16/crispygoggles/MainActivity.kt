@@ -30,63 +30,27 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyApp(modifier: Modifier = Modifier) {
 
-    var shouldShowOnboarding by remember { mutableStateOf(true) }
-
     Surface(modifier) {
-        if (shouldShowOnboarding) {
-            OnboardingScreen(onContinueClicked = { shouldShowOnboarding = false })
-        } else {
-            Greetings()
-        }
-    }
-}
-
-@Composable
-fun OnboardingScreen(
-    onContinueClicked: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text("Welcome to the Basics Codelab!")
-        Button(
-            modifier = Modifier.padding(vertical = 24.dp),
-            onClick = onContinueClicked
-        ) {
-            Text("Continue")
-        }
+        Greetings()
     }
 }
 
 @Composable
 private fun Greetings(
     modifier: Modifier = Modifier,
-    names: List<String> = listOf("World", "Compose")
+    names: List<ItemCompra> = listaCompra
 ) {
     Column(modifier = modifier.padding(vertical = 4.dp)) {
         for (name in names) {
-            Greeting(name = name)
+            Greeting(nome = name.nome, quant = name.quant, desc = name.desc)
         }
     }
 }
 
-@Preview(showBackground = true, widthDp = 320, heightDp = 320)
 @Composable
-fun OnboardingPreview() {
-    JetpackComposebasicoTheme {
-        OnboardingScreen(onContinueClicked = {})
-    }
-}
-
-@Composable
-private fun Greeting(name: String) {
+private fun Greeting(nome: String, quant: Int, desc: String) {
 
     val expanded = remember { mutableStateOf(false) }
-
     val extraPadding = if (expanded.value) 48.dp else 0.dp
 
     Surface(
@@ -96,19 +60,21 @@ private fun Greeting(name: String) {
         Row(modifier = Modifier.padding(24.dp)) {
             Column(modifier = Modifier
                 .weight(1f)
-                .padding(bottom = extraPadding)
             ) {
-                Text(text = "Hello, ")
-                Text(text = name)
+                Text(text = nome)
+                Text(if (expanded.value) "Quantidade: $quant" else " ")
+                Text(if (expanded.value) "$desc" else " ")
             }
             Button(
                 onClick = { expanded.value = !expanded.value }
             ) {
-                Text(if (expanded.value) "Show less" else "Show more")
+                Text(if (expanded.value) "Mostrar menos" else "Mostrar mais")
+            }
+
             }
         }
     }
-}
+
 
 @Preview(showBackground = true, widthDp = 320)
 @Composable
@@ -125,3 +91,28 @@ fun MyAppPreview() {
         MyApp(Modifier.fillMaxSize())
     }
 }
+
+
+data class ItemCompra(
+    val nome: String,
+    val quant: Int,
+    val desc: String
+)
+
+val listaCompra = listOf(
+    ItemCompra(nome = "Batata",
+    quant = 12,
+    desc = "Tubérculo, ótima fonte de potássio."),
+    ItemCompra(nome = "Caixa Misteriosa",
+    quant = 506,
+    desc = "é um mistério, descubra."),
+    ItemCompra(nome = "Chacolaite",
+        quant = 3,
+        desc = "Chocolate Garoto, meio amargo."),
+    ItemCompra(nome = "Sabão em pó",
+        quant = 1,
+        desc = "para lavar roupas."),
+    ItemCompra(nome = "Suco de Laranja.",
+        quant = 2,
+        desc = "Del Valle é suco.")
+)
