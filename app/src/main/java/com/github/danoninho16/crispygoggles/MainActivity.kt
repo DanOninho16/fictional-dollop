@@ -51,7 +51,6 @@ private fun Greetings(
 private fun Greeting(nome: String, quant: Int, desc: String) {
 
     val expanded = remember { mutableStateOf(false) }
-    val extraPadding = if (expanded.value) 48.dp else 0.dp
 
     Surface(
         color = MaterialTheme.colors.primary,
