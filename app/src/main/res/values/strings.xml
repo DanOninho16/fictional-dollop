@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">jetpack composebasico</string>
+    <string name="show_less">Show less</string>
+    <string name="show_more">Show more</string>
+    <string name="welcome">Bem vindo ao básico do jetpack composable!</string>
+    <string name="continue_button">Continue</string>
+    <string name="Hello">\"Hello, \"</string>
 </resources>
